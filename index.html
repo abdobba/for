@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حساب مقاس العباية</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .container {
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #4a4a4a;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .result, .error {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .result {
+            color: #333;
+        }
+
+        .error {
+            color: #d9534f;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .heading-result {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <script>
+        // إنشاء المدخلات والزر باستخدام JavaScript فقط
+        window.onload = function() {
+            // إنشاء العناصر عبر JavaScript
+            const formContainer = document.createElement('div');
+            formContainer.className = 'container';
+
+            const heading = document.createElement('h2');
+            heading.innerText = "احسب مقاس عبايتك";
+
+            const heightLabel = document.createElement('label');
+            heightLabel.innerText = "ادخل طولك (سم):";
+            const heightInput = document.createElement('input');
+            heightInput.type = "number";
+            heightInput.id = "height";
+            heightInput.placeholder = "أدخل طولك بالسنتيمتر";
+            heightInput.required = true;
+
+            const weightLabel = document.createElement('label');
+            weightLabel.innerText = "ادخل وزنك (كجم):";
+            const weightInput = document.createElement('input');
+            weightInput.type = "number";
+            weightInput.id = "weight";
+            weightInput.placeholder = "أدخل وزنك بالكيلو";
+            weightInput.required = true;
+
+            const submitButton = document.createElement('button');
+            submitButton.innerText = "احسب";
+            submitButton.onclick = calculateSize;
+
+            const resultDiv = document.createElement('div');
+            resultDiv.id = "result";
+
+            const errorDiv = document.createElement('div');
+            errorDiv.id = "error";
+
+            // إضافة العناصر إلى الـ body
+            formContainer.appendChild(heading);
+            formContainer.appendChild(heightLabel);
+            formContainer.appendChild(heightInput);
+            formContainer.appendChild(weightLabel);
+            formContainer.appendChild(weightInput);
+            formContainer.appendChild(submitButton);
+            formContainer.appendChild(resultDiv);
+            formContainer.appendChild(errorDiv);
+
+            document.body.appendChild(formContainer);
+        };
+
+        function calculateSize() {
+            // الحصول على القيم المدخلة من المدخلات باستخدام JS
+            const height = parseFloat(document.getElementById('height').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+
+            // التحقق من أن المدخلات ضمن النطاق المسموح
+            if (height < 147 || height > 170 || weight < 30 || weight > 150) {
+                document.getElementById('error').innerText = "نعتذر منك! يجب أن يكون الطول ما بين 147-170 سم والوزن ما بين 30-150 كجم.";
+                document.getElementById('result').innerHTML = "";
+                return;
+            } else {
+                document.getElementById('error').innerHTML = "";
+            }
+
+            // معادلة طول العباية
+            const abayaLengthInches = Math.round((height / 3) + (weight / 30));  // تقريب الرقم لأقرب عدد صحيح
+
+            // معادلة عرض العباية
+            const abayaWidth = Math.round((height / 10) + (weight / 10)); // تقريب الرقم لأقرب عدد صحيح
+
+            // عرض النتيجة للمستخدم مع ذكر الطول والعرض في النص
+            const resultText = `
+                <div class="heading-result">مقاس العباية المناسب لك</div>
+                <p>طول العباية هو: ${abayaLengthInches} إنش</p>
+                <p>عرض العباية هو: ${abayaWidth} إنش</p>
+            `;
+            document.getElementById('result').innerHTML = resultText;
+        }
+    </script>
+
+</body>
+</html>
